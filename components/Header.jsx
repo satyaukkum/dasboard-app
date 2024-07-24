@@ -1,7 +1,18 @@
+"use client";
+
 import React from "react";
 import "./styles.css";
 import Link from "next/link";
 import { IoPersonCircleOutline } from "react-icons/io5";
+
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "./ui/dropdown-menu";
 
 const Header = () => {
   return (

@@ -9,6 +9,14 @@ const poppins = Poppins({
   variable: "--font-poppins",
 });
 
+export const metadata = {
+  title: "Gyde dashboard",
+  description: "A test dashboard",
+  icons: {
+    icon: "/images/logo-small.svg",
+  },
+};
+
 export default function PageLayout({ children }) {
   return (
     <html lang="en">
