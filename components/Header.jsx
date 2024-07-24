@@ -1,6 +1,5 @@
 import React from "react";
 import "./styles.css";
-import { Button } from "../components/ui/button";
 import Link from "next/link";
 import { IoPersonCircleOutline } from "react-icons/io5";
 
@@ -12,7 +11,6 @@ const Header = () => {
         <Link className="profile-icon" href="/">
           <IoPersonCircleOutline className="icon" />
         </Link>
-        <Button>Logout</Button>
       </div>
     </nav>
   );
