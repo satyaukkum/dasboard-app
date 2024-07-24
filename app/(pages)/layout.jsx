@@ -4,12 +4,9 @@ import dynamic from "next/dynamic";
 import "../globals.css";
 
 import "../globals.css";
-const Header = dynamic(() => import("../../components/Header"), {
-  ssr: false,
-});
-const Sidebar = dynamic(() => import("../../components/Sidebar"), {
-  ssr: false,
-});
+
+import Header from "../../components/Header";
+import Sidebar from "../../components/Sidebar";
 
 const poppins = Poppins({
   subsets: ["latin"],

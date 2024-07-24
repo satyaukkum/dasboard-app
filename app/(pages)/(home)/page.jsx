@@ -152,7 +152,7 @@ export default function Home() {
               options={data1.options}
               series={data1.series}
               type="bar"
-              height="300"
+              height="350"
               width="100%"
             />
           </div>
@@ -164,7 +164,7 @@ export default function Home() {
               options={data2.options}
               series={data2.series}
               type="donut"
-              height="100"
+              height="150"
               width="100%"
             />
           </div>
@@ -176,7 +176,7 @@ export default function Home() {
               options={data3.options}
               series={data3.series}
               type="area"
-              height="100"
+              height="150"
               width="100%"
             />
           </div>
