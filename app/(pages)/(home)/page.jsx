@@ -1,9 +1,16 @@
 "use client";
 
-import "../../globals.css";
 import { useState } from "react";
 import dynamic from "next/dynamic";
 const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
+
+//components
+import SliderAnalytics from "@/components/SliderAnalytics";
+
+//css
+import "swiper/css";
+import "swiper/css/pagination";
+import "../../globals.css";
 
 export default function Home() {
   const [data1, setData1] = useState({
@@ -144,6 +151,17 @@ export default function Home() {
   });
   return (
     <main className="main-body">
+      <SliderAnalytics
+        data={[
+          "Slider1",
+          "Slider2",
+          "Slider3",
+          "Slider4",
+          "Slider5",
+          "Slider6",
+          "Slider7",
+        ]}
+      />
       <div className="analytics-grid-1">
         <div className="card card-1">
           <h3>Test analytics 1</h3>

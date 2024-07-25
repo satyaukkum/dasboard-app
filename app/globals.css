@@ -3,7 +3,8 @@
 @tailwind utilities;
 
 :root {
-  --primary-color: #f3347d;
+  /* --primary-color: #f3347d; */
+  --primary-color: #1e307d;
   --font-primary: rgb(43, 40, 41);
   --font-secondary: rgb(58, 48, 52);
   --bg-primary: #ffffff;
@@ -36,6 +37,9 @@ body {
   background-color: white;
   border-radius: 10px;
   box-shadow: 3px 3px 30px 0px rgb(219, 219, 219);
+}
+.auth-form .logo-auth {
+  margin-bottom: 10px;
 }
 .auth-form h1 {
   color: var(--font-primary);
@@ -131,12 +135,17 @@ body {
   display: flex;
   flex-direction: column;
   margin-left: 270px;
-  min-height: 100svh;
+  max-height: calc(90% - 100px);
 }
 .main-body {
-  background-color: rgb(247, 247, 247);
-  height: 100%;
+  background-color: rgb(255, 255, 255);
+  height: calc(100svh - 80px);
   padding: 20px;
+  overflow: auto;
+}
+
+.main-body::-webkit-scrollbar {
+  display: none;
 }
 
 .analytics-grid-1 {
@@ -164,4 +173,156 @@ body {
   background-color: white;
   min-height: 150px;
   padding: 15px;
+}
+
+/* Applications page */
+.apps-heading {
+  font-size: 1.7rem;
+  font-weight: 600;
+  color: var(--font-primary);
+}
+.add-app-btn {
+  color: white;
+  background-color: var(--primary-color);
+  align-self: center;
+  padding: 8px 18px;
+  border: none;
+  outline: none;
+  border-radius: 7px;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.apps-list {
+  list-style-type: none;
+  padding: 20px;
+  background-color: white;
+  margin-top: 15px;
+  border-radius: 7px;
+  box-shadow: 0px 0px 8px 0px rgb(230, 230, 230);
+}
+.apps-list .app-item {
+  display: flex;
+  width: 100%;
+  border: 1px solid rgb(235, 235, 235);
+  border-top: none;
+}
+.apps-list .app-item.header {
+  border: 1px solid rgb(235, 235, 235);
+  font-weight: 600;
+}
+.apps-list .app-item p,
+.apps-list .app-item a {
+  padding: 5px 10px;
+  font-size: 15px;
+}
+.apps-list .app-item a:hover {
+  color: var(--primary-color);
+  text-decoration: underline;
+}
+.apps-list .app-item.header p {
+  font-size: 16px;
+}
+.apps-list .app-item .name {
+  width: 40%;
+  text-align: center;
+}
+.apps-list .app-item .category {
+  width: 20%;
+  text-align: center;
+}
+.apps-list .app-item .sub-category {
+  width: 20%;
+  text-align: center;
+}
+.apps-list .app-item .plan {
+  width: 20%;
+  text-align: center;
+}
+
+/* app details  */
+.app-edit-form {
+  width: 100%;
+  background-color: white;
+  box-shadow: 0px 0px 8px 0px rgb(230, 230, 230);
+  margin-top: 20px;
+  padding: 20px 30px;
+}
+
+.app-edit-form .input-wrapper {
+  display: flex;
+  width: 60%;
+  /* background-color: #1e307d; */
+  margin-bottom: 15px;
+}
+.field-label {
+  font-size: 15px;
+  margin: 8px;
+}
+.app-edit-form .input-wrapper .input {
+  width: 70%;
+  padding: 7px 15px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--font-primary);
+  background-color: transparent;
+  border: 1px solid rgb(238, 238, 238);
+  outline: none;
+  border-radius: 3px;
+}
+.app-edit-form .input-wrapper .input:focus {
+  border: 1px solid rgb(209, 209, 209);
+}
+.app-edit-form .input-wrapper .text {
+  width: 70%;
+  padding: 7px 15px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--font-primary);
+  background-color: rgb(238, 238, 238);
+  border: 1px solid transparent;
+  border-radius: 3px;
+}
+
+.app-edit-form .input-wrapper .edit-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--primary-color);
+  background-color: transparent;
+}
+.app-edit-form .input-wrapper .edit-btn svg {
+  height: 18px;
+  width: 18px;
+}
+
+.app-edit-form .save-app-dtls-btn {
+  background-color: var(--primary-color);
+  color: white;
+  font-size: 15px;
+  font-weight: 500;
+  padding: 7px 15px;
+  border: none;
+  outline: none;
+  border-radius: 4px;
+  margin: 10px 0;
+  /* align-self: center; */
+}
+
+@media screen and (max-width: 1024px) {
+  .main-content {
+    margin-left: 0px;
+  }
+
+  .main-body .slider-1 {
+    width: 100%;
+  }
+  .main-body .slider-1 .swiper-wrapper {
+    width: calc(100vw - 50px);
+  }
 }

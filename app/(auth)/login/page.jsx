@@ -5,6 +5,7 @@ import { MdOutlineVpnKey } from "react-icons/md";
 import { LuUser } from "react-icons/lu";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 const Login = () => {
   const router = useRouter();
@@ -17,7 +18,13 @@ const Login = () => {
   return (
     <main className="auth-container">
       <form action="" onSubmit={handleSubmit} className="auth-form">
-        <h1>LOGIN</h1>
+        {/* <h1>LOGIN</h1> */}
+        <Image
+          src="/images/gyde-logo-1.png"
+          height={30}
+          width={100}
+          className="logo-auth"
+        />
         {/* <div className='input-wrapper'>
           <span className='icon'><LuUser /></span>
           <input type="text" className='auth-form-input' />
@@ -43,7 +50,7 @@ const Login = () => {
             Forgot password?
           </Link>
         </div>
-        <button>Submit</button>
+        <button>LOGIN</button>
         <div className="sign-up-link-text">
           Don't have an account?{" "}
           <Link href="/register" className="link">

@@ -11,17 +11,26 @@ import { GrAppsRounded } from "react-icons/gr";
 import { FaChartBar } from "react-icons/fa";
 import { AiOutlineClose } from "react-icons/ai";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useAppContext } from "@/context";
 
 const Sidebar = () => {
+  const pathname = usePathname();
+  const { viewSidebar, toggleSidebar } = useAppContext();
+  console.log(pathname);
   return (
-    <aside className="main-sidebar">
+    <aside className={`main-sidebar ${viewSidebar ? "slide-in" : "slide-out"}`}>
       <div className="sidebar-top">
         <Link href="/" className="logo-image">
-          <Image src="images/dark-logo.svg" width="180" height={35} alt="" />
+          <Image src="/images/gyde-logo-1.png" width="80" height={20} alt="" />
         </Link>
-        <div className="close-btn" id="sidebarCollapse">
+        <button
+          className="close-btn"
+          id="sidebarCollapse"
+          onClick={toggleSidebar}
+        >
           <AiOutlineClose />
-        </div>
+        </button>
       </div>
       <nav className="sidebar-nav">
         <ul id="sidebarnav">
@@ -30,7 +39,7 @@ const Sidebar = () => {
           </li>
           <li className="sidebar-item">
             <Link
-              className="sidebar-link active"
+              className={`sidebar-link ${pathname === "/" ? "active" : ""}`}
               href="/"
               aria-expanded="false"
             >
@@ -41,7 +50,9 @@ const Sidebar = () => {
           </li>
           <li className="sidebar-item">
             <Link
-              className="sidebar-link"
+              className={`sidebar-link ${
+                pathname.includes("/applications") ? "active" : ""
+              }`}
               href="/applications"
               aria-expanded="false"
             >

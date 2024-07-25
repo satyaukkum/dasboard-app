@@ -1,5 +1,5 @@
 :root {
-  --primary-color: #f3347d;
+  --primary-color: #1e307d;
   --font-primary: rgb(43, 40, 41);
   --font-secondary: rgb(58, 48, 52);
   --bg-primary: #ffffff;
@@ -14,15 +14,26 @@
   height: 100%;
   z-index: 11;
   border-right: 1px solid rgb(229, 234, 239);
+  transition: 1s all ease-out;
 }
 .sidebar-top {
-  padding: 35px 40px;
+  padding: 20px 20px 20px 40px;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 .sidebar-top .logo-image {
   padding: 0;
+}
+
+.sidebar-top .close-btn {
+  display: none;
+  align-self: flex-start;
+}
+
+.sidebar-top .close-btn svg {
+  height: 20px;
+  width: 20px;
 }
 
 .sidebar-nav {
@@ -58,6 +69,7 @@
   margin-bottom: 5px;
   font-size: 14px;
   border-radius: 7px;
+  transition: 0.2s all ease;
 }
 .sidebar-nav .sidebar-item .sidebar-link .icon {
   margin-right: 15px;
@@ -67,7 +79,7 @@
 
 .sidebar-nav .sidebar-item .sidebar-link:hover {
   color: var(--primary-color);
-  background-color: #f3347d1c;
+  background-color: #1e2f7d15;
 }
 
 .sidebar-nav .sidebar-item .sidebar-link.active {
@@ -83,6 +95,10 @@
   justify-content: space-between;
 }
 
+.main-header .sidebar-toggle-btn {
+  display: none;
+}
+
 .main-header .header-btns {
   display: flex;
   align-items: center;
@@ -91,4 +107,48 @@
   height: 35px;
   width: 35px;
   margin-inline: 10px;
+}
+
+.main-body .slider-1 {
+  width: calc(100% - 270px);
+  margin-bottom: 25px;
+}
+.main-body .slider-1 .swiper-wrapper {
+  width: calc(100vw - 350px);
+}
+.slider-1 .swiper-wrapper .slide-1 {
+  /* background-color: white; */
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 6px;
+}
+.slider-1 .swiper-wrapper .slide-1 .text-1 {
+  margin: 12px 0 0 0;
+  font-size: 14px;
+  font-weight: 500;
+}
+.slider-1 .swiper-wrapper .slide-1 .text-2 {
+  font-size: 18px;
+  font-weight: 500;
+  margin: 5px 0 0 0;
+}
+
+@media screen and (max-width: 1024px) {
+  .main-sidebar {
+    transform: translateX(-300px);
+  }
+  .main-sidebar.slide-in {
+    transform: translateX(0px);
+  }
+  .main-sidebar.slide-out {
+    transform: translateX(-300px);
+  }
+  .sidebar-top .close-btn {
+    display: inline;
+  }
+  .main-header .sidebar-toggle-btn {
+    display: inline;
+  }
 }

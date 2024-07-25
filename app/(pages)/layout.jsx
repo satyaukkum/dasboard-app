@@ -7,6 +7,7 @@ import "../globals.css";
 
 import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
+import { AppWrapper } from "@/context";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -27,13 +28,15 @@ export default function PageLayout({ children }) {
   return (
     <html lang="en">
       <body className={poppins.className}>
-        <main className="flex ">
-          <Sidebar />
-          <div className="main-content w-full">
-            <Header />
-            {children}
-          </div>
-        </main>
+        <AppWrapper>
+          <main className="flex ">
+            <Sidebar />
+            <div className="main-content w-full">
+              <Header />
+              {children}
+            </div>
+          </main>
+        </AppWrapper>
       </body>
     </html>
   );
