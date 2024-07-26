@@ -103,6 +103,20 @@
   display: flex;
   align-items: center;
 }
+.profile-dropdown-trigger-btn {
+  outline: none !important;
+  border: none;
+}
+.profile-dropdown-menu {
+  margin-right: 50px;
+  background-color: white !important;
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--font-primary);
+}
+.profile-dropdown-menu .logout-btn {
+  cursor: pointer;
+}
 .main-header .header-btns .icon {
   height: 35px;
   width: 35px;

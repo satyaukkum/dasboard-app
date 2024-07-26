@@ -9,25 +9,47 @@ const AppDetails = ({ params }) => {
   const { appName } = params;
 
   useEffect(() => {
-    const data = {
-      appName: {
-        value: "Google",
-        editting: false,
-      },
-      category: {
-        value: "Main",
-        editting: false,
-      },
-      subCategory: {
-        value: "Sub",
-        editting: false,
-      },
-      plan: {
-        value: "Free",
-        editting: false,
-      },
-    };
-    setAppData(data);
+    if (appName === "add") {
+      const data = {
+        appName: {
+          value: "",
+          editting: true,
+        },
+        category: {
+          value: "",
+          editting: true,
+        },
+        subCategory: {
+          value: "",
+          editting: true,
+        },
+        plan: {
+          value: "",
+          editting: true,
+        },
+      };
+      setAppData(data);
+    } else {
+      const data = {
+        appName: {
+          value: "Google",
+          editting: false,
+        },
+        category: {
+          value: "Main",
+          editting: false,
+        },
+        subCategory: {
+          value: "Sub",
+          editting: false,
+        },
+        plan: {
+          value: "Free",
+          editting: false,
+        },
+      };
+      setAppData(data);
+    }
   }, []);
 
   const goBackToApps = () => {
@@ -42,7 +64,9 @@ const AppDetails = ({ params }) => {
     <div className="main-body">
       <div className="flex justify-between pl-2 pr-6">
         <h1 className="apps-heading">
-          AppDetails: {appData ? appData.appName.value : ""}
+          {appName === "add"
+            ? "Add application"
+            : `AppDetails: ${appData ? appData.appName.value : ""}`}
         </h1>
         <button className="add-app-btn" onClick={goBackToApps}>
           Back
@@ -210,7 +234,11 @@ const AppDetails = ({ params }) => {
               <CiEdit />
             </button>
           </div>
-          <button className="save-app-dtls-btn">Save App Details</button>
+          {appName === "add" ? (
+            <button className="save-app-dtls-btn">Add App Details</button>
+          ) : (
+            <button className="save-app-dtls-btn">Save App Details</button>
+          )}
         </form>
       )}
     </div>

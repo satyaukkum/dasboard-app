@@ -1,42 +1,52 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
 import { FaPlus } from "react-icons/fa6";
 
 //css
 import "../../globals.css";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+
+const apps = [
+  {
+    name: "Google",
+    category: "Main",
+    subCategory: "Sub",
+    plan: "Free",
+  },
+  {
+    name: "Facebook",
+    category: "Main",
+    subCategory: "Sub",
+    plan: "Paid",
+  },
+  {
+    name: "Gyde",
+    category: "Main",
+    subCategory: "Sub",
+    plan: "Paid",
+  },
+  {
+    name: "Kido",
+    category: "Main",
+    subCategory: "Sub",
+    plan: "Free",
+  },
+];
 
 const Applications = () => {
-  const apps = [
-    {
-      name: "Google",
-      category: "Main",
-      subCategory: "Sub",
-      plan: "Free",
-    },
-    {
-      name: "Facebook",
-      category: "Main",
-      subCategory: "Sub",
-      plan: "Paid",
-    },
-    {
-      name: "Gyde",
-      category: "Main",
-      subCategory: "Sub",
-      plan: "Paid",
-    },
-    {
-      name: "Kido",
-      category: "Main",
-      subCategory: "Sub",
-      plan: "Free",
-    },
-  ];
+  const [appList, setAppList] = useState(apps);
+  const router = useRouter();
+
+  const addApplication = () => {
+    router.push("/applications/add");
+    // console.log("App Added");
+  };
   return (
     <main className="main-body">
       <div className="flex justify-between pl-2 pr-6">
         <h1 className="apps-heading">Applications</h1>
-        <button className="add-app-btn">
+        <button className="add-app-btn" onClick={addApplication}>
           <FaPlus />
           Add Application
         </button>
@@ -48,7 +58,7 @@ const Applications = () => {
           <p className="sub-category">Sub-category</p>
           <p className="plan">Plan</p>
         </li>
-        {apps.map((app, index) => {
+        {appList.map((app, index) => {
           return (
             <li key={index} className="app-item">
               <p className="name">
