@@ -25,13 +25,13 @@ jobs:
         run: CI=false npm run build  # Ensure the build step is successful
 
       - name: List build directory
-        run: ls -l .next
+        run: ls -l .next/
 
       - name: Upload Build Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: nextjs-build
-          path: .next
+          name: nextjsbuild
+          path: .next/
 
   deploy:
     needs: build
@@ -41,8 +41,8 @@ jobs:
       - name: Download Build Artifact
         uses: actions/download-artifact@v4
         with:
-          name: nextjs-build
-          path: .next
+          name: nextjsbuild
+          path: .next/
 
       - name: Deploy to AWS EC2
         uses: appleboy/ssh-action@v0.1.7
@@ -54,6 +54,6 @@ jobs:
             # SSH into EC2 and deploy the build
             cd /var/www/nextjs-app
             rm -rf .next  # Clean old build files
-            mv ~/nextjs-build/.next ./
+            mv ~/nextjsbuild/.next ./
             npm install --production  # Install production dependencies
             pm2 restart nextjs-app || pm2 start npm --name "nextjs-app" -- start  # Use PM2 to manage the app
