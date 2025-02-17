@@ -3,7 +3,7 @@ name: Deploy Next.js to AWS EC2
 on:
   push:
     branches:
-      - main  # Change this to your default branch name if different (e.g., 'master')
+      - main
 
 jobs:
   build:
@@ -16,24 +16,22 @@ jobs:
       - name: Set Up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18'  # Ensure you are using Node.js 18 for React 18
+          node-version: '18'
 
       - name: Install Dependencies
         run: npm install
 
       - name: Build Next.js Application
-        run: CI=false npm run build  # Ensure the build step is successful
+        run: npm run build
 
-      - name: Check build output directory
-        run: |
-          echo "Checking .next/ directory contents"
-          ls -la .next/  # This will list the contents of .next to verify if it exists
+      - name: Verify Build Output
+        run: ls -la .next
 
       - name: Upload Build Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: nextjsbuild  # This is the name for the artifact that will be used later
-          path: .next/       # Path to the build directory (should be the correct build output directory)
+          name: nextjsbuild
+          path: .next
 
   deploy:
     needs: build
@@ -43,20 +41,23 @@ jobs:
       - name: Download Build Artifact
         uses: actions/download-artifact@v4
         with:
-          name: nextjsbuild  # Ensure the name matches the artifact name in the build step
-          path: .next/       # Path where the artifact will be downloaded
+          name: nextjsbuild
+          path: build-artifact
 
       - name: Deploy to AWS EC2
         uses: appleboy/ssh-action@v0.1.7
         with:
           host: ${{ secrets.AWS_HOST }}
-          username: ubuntu  # Change if you're using a different user
+          username: ubuntu
           key: ${{ secrets.AWS_PRIVATE_KEY }}
           script: |
-            # SSH into EC2 and deploy the build
-            echo "Starting deployment on EC2"
+            echo "Removing old files..."
+            rm -rf /var/www/nextjs-app/.next
+            echo "Copying new build..."
+            cp -R build-artifact/.next /var/www/nextjs-app/
+            echo "Installing dependencies..."
             cd /var/www/nextjs-app
-            rm -rf .next  # Clean old build files
-            mv ~/nextjsbuild/.next ./  # Move the new build files to the correct directory
-            npm install --production  # Install production dependencies
-            pm2 restart nextjs-app || pm2 start npm --name "nextjs-app" -- start  # Use PM2 to manage the app
+            npm install --production
+            echo "Restarting application..."
+            pm2 restart nextjs-app || pm2 start npm --name "nextjs-app" -- start
+          script_stop: true
