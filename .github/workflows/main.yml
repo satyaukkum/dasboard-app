@@ -2,55 +2,71 @@ name: Deploy Next.js to AWS EC2
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main  # Change this to your default branch name if different (e.g., 'master')
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
 
-      - name: Setup Node.js
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set Up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: '20'  # Updated to latest stable version
 
       - name: Install Dependencies
-        run: npm install
+        run: npm ci  # Ensures clean install of dependencies
 
-      - name: Build Next.js App
-        run: npm run build
+      - name: Build Next.js Application
+        run: CI=false npm run build  # Prevents warnings from failing the build
 
-      - name: Verify Build Output
-        run: ls -la .next  # Must show files here
+      - name: List root directory
+        run: ls -la
 
-      - name: Upload Artifact
+      - name: Check if .next directory exists
+        run: |
+          if [ -d ".next" ]; then
+            echo ".next/ directory exists ✅"
+            ls -la .next/
+          else
+            echo "❌ ERROR: .next/ directory not found!"
+            exit 1
+          fi
+
+      - name: Upload Build Artifact
         uses: actions/upload-artifact@v4
         with:
           name: nextjsbuild
-          path: .next/
-          retention-days: 1  # Optional: Reduce retention time for testing
+          path: |
+            .next/
+            package.json
+            package-lock.json
 
   deploy:
     needs: build
     runs-on: ubuntu-latest
+
     steps:
-      - name: Download Artifact
+      - name: Download Build Artifact
         uses: actions/download-artifact@v4
         with:
           name: nextjsbuild
-          path: build-artifact
+          path: ~/nextjsbuild/
 
-      - name: Deploy to EC2
+      - name: Deploy to AWS EC2
         uses: appleboy/ssh-action@v0.1.7
         with:
           host: ${{ secrets.AWS_HOST }}
           username: ubuntu
           key: ${{ secrets.AWS_PRIVATE_KEY }}
           script: |
-            echo "Deploying build..."
+            echo "Starting deployment on EC2..."
             cd /var/www/nextjs-app
-            rm -rf .next
-            cp -R build-artifact/.next ./
-            npm install --production
+            rm -rf .next  # Clean old build
+            mv ~/nextjsbuild/.next ./  # Move new build files
+            npm install --production  # Install dependencies
             pm2 restart nextjs-app || pm2 start npm --name "nextjs-app" -- start
