@@ -1,0 +1,56 @@
+name: Deploy Next.js to AWS EC2
+
+on:
+  push:
+    branches:
+      - main  # Change this to your default branch name if different (e.g., 'master')
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set Up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'  # Ensure you are using Node.js 18 for React 18
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Build Next.js Application
+        run: npm run build
+
+      - name: Upload Build Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: nextjs-build
+          path: .next/
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download Build Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: nextjs-build
+          path: .next/
+
+      - name: Deploy to AWS EC2
+        uses: appleboy/ssh-action@v0.1.7
+        with:
+          host: ${{ secrets.AWS_HOST }}
+          username: ubuntu  # Change if you're using a different user
+          key: ${{ secrets.AWS_PRIVATE_KEY }}
+          script: |
+            # SSH into EC2 and deploy the build
+            cd /var/www/nextjs-app
+            rm -rf .next  # Clean old build files
+            mv ~/nextjs-build/.next ./
+            npm install --production  # Install production dependencies
+            pm2 restart nextjs-app || pm2 start npm --name "nextjs-app" -- start  # Use PM2 to manage the app
